@@ -7,6 +7,8 @@ import warnings
 import calendar
 import random
 import wikipedia
+import webbrowser
+import vlc
 
 # ignore any warnings messages
 warnings.filterwarnings('ignore')
@@ -39,7 +41,8 @@ def getAlexaResponse(inputCommandText):
     obj = gTTS(text=inputCommandText, lang='en', slow=False)
     obj.save('alexa_response.mp3')
     # Play the response file
-    os.system('afplay alexa_response.mp3')
+    p = vlc.MediaPlayer('file://%s' % os.path.abspath('alexa_response.mp3'))
+    p.play()
 
 def iceBreakingWords(text):
     words = ['Hey Anuja, how may I help you', 'Okay Anuja', 'Alexa welcomes you']
@@ -73,7 +76,7 @@ def greet(text):
         if word in inputGreetWords:
             return random.choice(outputGreetWords)
 
-    return ' '
+    return text #' '
 
 def getPersonData(text):
 
