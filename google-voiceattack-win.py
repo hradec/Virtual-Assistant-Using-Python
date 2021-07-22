@@ -8,7 +8,6 @@ import calendar
 import random
 import wikipedia
 import webbrowser
-import vlc
 
 # ignore any warnings messages
 warnings.filterwarnings('ignore')
@@ -41,8 +40,17 @@ def getAlexaResponse(inputCommandText):
     obj = gTTS(text=inputCommandText, lang='en', slow=False)
     obj.save('alexa_response.mp3')
     # Play the response file
-    p = vlc.MediaPlayer('file://%s' % os.path.abspath('alexa_response.mp3'))
-    p.play()
+    try:
+      import vlc
+      p = vlc.MediaPlayer('file://%s' % os.path.abspath('alexa_response.mp3'))
+      p.play()
+    except: pass
+    import subprocess
+    subprocess.call([
+	'C:/Program Files (x86)/VoiceAttack/VoiceAttack.exe',
+	'-command',
+	'%s' %  inputCommandText
+    ])
 
 def iceBreakingWords(text):
     words = ['Hey Anuja, how may I help you', 'Okay Anuja', 'Alexa welcomes you']
